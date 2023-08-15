@@ -1,0 +1,20 @@
+module hello_m
+contains
+  attributes(global) subroutine hello()
+  implicit none
+
+  print*, 'hello world from GPU!'
+
+end subroutine hello
+end module hello_m
+
+program main
+  use cudafor
+  use hello_m
+  implicit none
+
+  integer :: ierr
+  call hello<<<1,10>>>()
+  ierr = cudaDeviceReset()
+
+end program main
