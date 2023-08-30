@@ -120,12 +120,14 @@ Two categories of data transfers:
 
 **Avoid transfers between the host and device whenever possible!**
 
-### Transfer between host and device
+### 3.1 Transfer between host and device
 
 **_考虑 managed memory!!_**
 https://developer.nvidia.com/blog/unified-memory-cuda-beginners/
 
 #### Pinned memory
+
+Page table: https://en.wikipedia.org/wiki/Page_table
 
 - The cost of the transfer between pageable memory and pinned host buffer can be avoided if we declare the host arrays to use pinned memory
 
@@ -137,3 +139,39 @@ transfer array sections between device and host:
 use `cudaMemcpy2D()` or `cudaMemcpy3D()`
 
 #### Asynchronous data transfers
+
+### 3.2 Device memory
+
+Types:
+
+- In device DRAM:
+  - **Global memory** - declared with `device` attribute in host code, can be read and written from both host and device
+  - **Local memory**
+  - **Constant memory** - declared using `constant` qualifier in a Fortran module. can be read and written from host but is read-only from threads in device. **constant data is cached on the chip and is most effective when threads that execute at the same time access the same value**
+  - **Texture memory** - similar to constant memory
+- On-chip:
+  - **Shared memory** - accessible by all threads in a thread block. declared in device code using `shared` qualifier
+
+![Device memory](memory.png)
+
+#### coalesced access to global memory
+
+**warp** (32 threads) - the actual grouping of threads that gets calculated in singel-instruction multiple-thread (SIMT) fashion.
+
+- grouping into warps is relevant not only to computation but also to _global memory accesses_
+
+#### texture memory
+
+#### local memory
+
+_local_ refers to a variable's scope (meaning **thread-private**) and not to its physical location (off-chip in device DRAM)
+
+- **register memory is not indexable!**
+
+#### constant memory
+
+64KB of constant memory, cached on-chip
+
+### 3.3 On-chip memory
+
+#### L1 cache
