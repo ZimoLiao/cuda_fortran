@@ -73,17 +73,21 @@ pgf90 -Mcuda ch1_1.f90
   istat = cudaEventDestroy(stopEvent)
 ```
 
-<!-- #### Command line profiler (DEPRECATED) -->
+#### Command line profiler (DEPRECATED)
 
-#### The `nvprof` profiling tool
+#### The `nvprof` profiling tool (DEPRECATED)
 
-https://docs.nvidia.com/cuda/profiler-users-guide/index.html
+<!-- https://docs.nvidia.com/cuda/profiler-users-guide/index.html
 
 ```
 nvprof ./ApplicationName
 ```
 
-- `--print-gpu-trace` separate output for each call
+- `--print-gpu-trace` separate output for each call -->
+
+#### Nsight system
+
+https://developer.nvidia.com/nsight-systems
 
 ### Instruction, bandwidth, and latency bound kernels
 
@@ -108,3 +112,28 @@ $$
 where $R_B$ is the number of bytes read per kernel, $W_B$ is the number of bytes written per kernel, $t$ is the elapsed time given in seconds.
 
 ## Chapter 3. Optimization
+
+Two categories of data transfers:
+
+1. data transfer between host and device memories
+2. data transfer between different memories on the device
+
+**Avoid transfers between the host and device whenever possible!**
+
+### Transfer between host and device
+
+**_考虑 managed memory!!_**
+https://developer.nvidia.com/blog/unified-memory-cuda-beginners/
+
+#### Pinned memory
+
+- The cost of the transfer between pageable memory and pinned host buffer can be avoided if we declare the host arrays to use pinned memory
+
+- Pinned memory should **not be overused**, since excessive use can reduce overall system performance.
+
+#### Batching small data transfers
+
+transfer array sections between device and host:
+use `cudaMemcpy2D()` or `cudaMemcpy3D()`
+
+#### Asynchronous data transfers
