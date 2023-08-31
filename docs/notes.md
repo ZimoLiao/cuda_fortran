@@ -191,3 +191,26 @@ shared memory is allocated per thread block
 - multiple accesses to the same location by any number of threads within a warp are served simultaneously.
 
 ### 3.4 Memory optimization example: matrix transpose
+
+- memory coalescence (cache blcoking scheme)
+- **avoid bank conflict** https://developer.download.nvidia.com/CUDA/training/sharedmemoryusage_july2011.mp4
+
+### 3.5 Execution configuration
+
+#### Thread-level parallelism
+
+> 就是如何组织 block 和 grid 来调用核函数以达到最优
+
+**Occupancy** - (used to help assess the thread-level parallelism of a kernel on a multiprocessor) - _the ratio of the number of active warps per multiprocessor to the maximum number of possible active warps_
+
+- higher occupancy does not imply better performance
+
+#### Instruction-level parallelism
+
+### 3.6 Instruction optimization
+
+#### Device intrinsics
+
+- fast math intrinsics
+
+### 3.7 Kernel loop directives
