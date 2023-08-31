@@ -2,6 +2,8 @@
 
 > Ruetsch, G., & Fatica, M. (2013). CUDA Fortran for scientists and engineers: best practices for efficient CUDA Fortran programming. Elsevier.
 
+[toc]
+
 ## Chapter 1. Introduction
 
 Principle reason for the ubiquitous presence of **multiple cores** CPUs - **inability** of CPU manufacturers to increase performance in single-core designs by **boosting the clock speed**.
@@ -175,3 +177,17 @@ _local_ refers to a variable's scope (meaning **thread-private**) and not to its
 ### 3.3 On-chip memory
 
 #### L1 cache
+
+#### Registers
+
+#### Shared memory
+
+shared memory is allocated per thread block
+
+`syncthreads()` - barrier synchronization
+
+- shared memory is divided into equally sized memory modules (banks) that can be accessed simultaneously.
+- if multiple addresses of a memory request map to the same memory bank, the accesses are serialized.
+- multiple accesses to the same location by any number of threads within a warp are served simultaneously.
+
+### 3.4 Memory optimization example: matrix transpose
