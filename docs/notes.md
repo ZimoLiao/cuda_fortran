@@ -213,4 +213,32 @@ shared memory is allocated per thread block
 
 - fast math intrinsics
 
-### 3.7 Kernel loop directives
+### 3.7 Kernel loop directives (CUF kernels)
+
+- These directives instruct the compiler to generate kernels from a region of host code consisting of tightly nested loops.
+
+```
+!$cuf kernel do <<<*,*>>>                 ! 1D
+!$cuf kernel do <<<*,*,0,streamID>>>      ! 1D
+!$cuf kernel do <<<*,*,stream=streamID>>> ! 1D
+
+!$cuf kernel do (2) <<<(*,*),(32,8)>>>    ! 2D
+!$cuf kernel do (2) <<<(*,*),(*,*)>>>     ! 2D
+!$cuf kernel do (2) <<<*,*>>>             ! 2D
+```
+
+#### Reductions in CUF kernels! (自动优化实现)
+
+#### Intruction-level parallelism
+
+## Chapter 4. Multi-GPU Programming
+
+- CUDA is compatible with any host threading model, such as OpenMP and MPI
+- each host thread can access either single or multiple GPUs
+
+### 4.1 CUDA multi-GPU features
+
+- All CUDA calls are issued to the _current_ GPU, and `cudaSetDevice()` sets the current GPU
+- Device arrays that are not declared with the `allocatable` attribute are implicitly allocated on the default device (device 0)
+
+### 4.2 Multi-GPU Programming with MPI
