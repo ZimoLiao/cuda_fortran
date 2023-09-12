@@ -125,7 +125,8 @@ Two categories of data transfers:
 ### 3.1 Transfer between host and device
 
 **_考虑 managed memory!!_**
-https://developer.nvidia.com/blog/unified-memory-cuda-beginners/
+<!-- https://developer.nvidia.com/blog/unified-memory-cuda-beginners/ -->
+https://developer.nvidia.com/blog/unified-memory-cuda-fortran-programmers/
 
 #### Pinned memory
 
